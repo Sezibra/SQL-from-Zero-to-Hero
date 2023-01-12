@@ -1,0 +1,101 @@
+# CREATING TABLES IS MOSTLY THE FIRST STEP:
+
+[be sure that you have a solid understanding of different data types]
+INT --> Whole numbers
+DECIMAL (M,N) --> Decimal numbers, exact values
+VARCHAR (100) --> String of text of length 100
+BLOB --> Binary large object, stores large data
+Date --> 'YYYY-MM-DD'
+TIMESTRAMP --> 'YYYY-MM-DD HH:MM:SS' [only if you deal with the recordings]
+
+!!! The basic query for creating tables.
+CREATE TABLE employers (
+    employer_id INT,
+    name VARCHAR (30) NOT NULL,
+    department VARCHAR (20) DEFAULT 'unknown',
+    PRIMARY KEY (employer_id)
+);
+DESCRIBE employers; [double check your query!]
+DROP TABLE emploers; [in case you want to delete your table]
+
+ALTER TABLE employers ADD salary DECIMAL (3,3); [in case you want to add an extra column]
+ALTER TABLE employers DROP COLUMN department; [in case you want to drop a column]
+
+# INSERTING DATA INTO YOUR TABLES IS AN IMPORTANT PROCESS:
+
+INSERT INTO employers VALUES (1, 'Hannah', 'IT');
+INSERT INTO employers (employer_id, name) VALUES (1, 'Hannah'); [in case any information is missing]
+
+# UPDATING AND DELETING DATA:
+
+UPDATE employers
+SET department = 'HR'
+WHERE department = 'Human R.' OR 'H. Ressources';
+
+DELETE FROM employers
+WHERE employer_id = 35067;
+
+# GETTING INFORMATIONS FROM DATABASES:
+
+SELECT *
+FROM employers;
+WHERE employee_salary > 3500
+ORDER BY department DESC
+LIMIT 10;
+
+SELECT DISTINCT department 
+FROM employers;
+
+# IN CASE IT IS NEEDED TO CREATE A DATABESE:
+
+CREATE TABLE employee (
+emp_id INT PRIMARY KEY,
+first_name VARCHAR (30),
+last_name VARCHAR (30),
+birthday DATE,
+sex VARCHAR (1),
+salary INT,
+manager_id INT,
+department_id INT
+); 
+[If you create many tables, 
+the following tables should also contain a FOREIGN KEY and REFERENCES]
+such as...
+
+ALTER TABLE employee
+ADD FOREIGN KEY (department_id)
+REFERENCES branch (branch_id)
+ON DELETE SET NULL;
+
+ALTER TABLE employee
+ADD FOREIGN KEY (super_id)
+REFERENCES employer (employer_id)
+ON DELETE SET NULL;
+
+# USEFUL FUNCTIONS:
+
+SELECT COUNT (employer_id)  [to count any item in the database]
+FROM employers;
+
+SELECT AVG (salary)   [to deal with the average]
+FROM employee
+WHERE sex = 'Female';
+OR
+GROUP by sex;
+
+# % , # , _ CHARACTERS:
+
+SELECT *
+FROM department
+WHERE employer_name LIKE '%ab%';
+OR
+WHERE birth_date LIKE '____-02%' [whoever born in February]
+
+# UNION OPERATOR:
+
+SELECT first_name
+FROM employers;
+UNION
+SELECT department
+FROM branch;
+

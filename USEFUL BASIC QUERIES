@@ -115,14 +115,34 @@ FROM employee e
 JOIN branch b
     ON e.employee_id = b.emp_id;
 
-# NESTED QUERIES:
+# NESTED QUERIES: [sql begins from the inner query to outer one]
 
 SELECT e.first_name, e.last_name
 FROM employee e
 WHERE e.employee_id IN (
     SELECT ww.employee_id
     FROM works_with ww
-    WHERE ww.total_sales > 30000;
-)
+    WHERE ww.total_sales > 30000
+);
+
+# DELETING ENTRIES:
+
+CREATE TABLE branch (
+branch_id INt PRIMARY KEY,
+branch_name VARCHAR (40),
+manager_id INT,
+manager_start_date DATE,
+FOREIGN KEY (manager_id) REFERENCES employee (employee_id) ON DELETE SET NULL
+);
+
+[so if you go delete employee id SQL set manager_id instead of NULL, as follows]
+DELETE FROM employee_id = 102
+WHERE employee_id; 
+
+# USING TRIGGERS:
+
+
+
+
 
 

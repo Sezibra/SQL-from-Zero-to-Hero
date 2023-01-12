@@ -107,5 +107,22 @@ FROM works_with;
 
 # JOIN OPERATOR: [to combine columns from different tables]
 
+SELECT
+    e.employee_name,
+    e.department,
+    b.branch
+FROM employee e
+JOIN branch b
+    ON e.employee_id = b.emp_id;
+
+# NESTED QUERIES:
+
+SELECT e.first_name, e.last_name
+FROM employee e
+WHERE e.employee_id IN (
+    SELECT ww.employee_id
+    FROM works_with ww
+    WHERE ww.total_sales > 30000;
+)
 
 

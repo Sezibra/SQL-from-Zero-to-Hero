@@ -1,0 +1,47 @@
+SHOW tables;
+
+DESCRIBE sales;
+
+SELECT *
+FROM sales;
+
+SELECT SaleDate AS Date, Amount, Customer
+FROM sales;
+
+SELECT SaleDate, Amount, Boxes, Amount / Boxes AS 'Amount per Box'
+FROM sales;
+
+SELECT *
+FROM sales
+WHERE amount > 10000
+ORDER BY amount DESC;
+
+SELECT *
+FROM sales
+WHERE amount > 10000 AND SaleDate >= '2022-01-01'
+ORDER BY amount DESC;
+-OR-
+SELECT *
+FROM sales
+WHERE amount > 10000 AND YEAR (SaleDate) = 2022;
+ORDER BY amount DESC;
+
+SELECT *
+FROM sales
+WHERE Boxes BETWEEN 0 AND 50;
+
+SELECT SalesDate, Amount, Boxes, weekday (SaleDate) AS 'Day of week'
+FROM sales
+WHERE weekday (SaleDate) = 4;
+
+
+
+
+
+
+
+
+
+
+
+

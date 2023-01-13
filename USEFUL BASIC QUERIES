@@ -139,10 +139,29 @@ FOREIGN KEY (manager_id) REFERENCES employee (employee_id) ON DELETE SET NULL
 DELETE FROM employee_id = 102
 WHERE employee_id; 
 
-# USING TRIGGERS:
+# USING TRIGGERS: [configuring an automated action]
 
+DELIMITER $$
+CREATE
+    TRIGGER my_trigger BEFORE INSERT
+    ON employee
+    FOR EACH ROW BEGIN
+        INSERT INTO trigger_test VALUES ('added new employee');
+    END $$
+DELIMITER; 
 
-
-
-
-
+[it would look like as follows with conditionals]
+DELIMITER $$
+CREATE
+    TRIGGER my_trigger BEFORE INSERT
+    ON employee
+    FOR EACH ROW BEGIN
+        IF NEW.sex = 'M' THEN
+              INSERT INTO trigger_test VALUES ('added new employee');
+        ELSEIF NEW.sex = 'F' THEN
+              INSERT INTO trigger_test VALUES ('added female');
+        ELSE
+              INSERT INTO trigger_test VALUES ('added male');   
+        END IF;
+    END $$
+DELIMITER;

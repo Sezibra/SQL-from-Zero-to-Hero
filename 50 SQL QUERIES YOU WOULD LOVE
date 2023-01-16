@@ -68,10 +68,78 @@ SELECT
          END AS 'Amount category'
 FROM sales;
 
+SELECT
+    s.saleDate,
+    s.amount,
+    p.Salesperson,
+    s.SPID,
+    p.spid
+FROM sales s
+JOIN people p
+    ON p.SPID = s.SPID;
 
+SELECT
+    s.SalesDate,
+    s.amount,
+    pr.product
+FROM Sales s
+LEFT JOIN product pr
+    ON pr.spid = s.spid;
 
+SELECT
+    s.SalesDate,
+    s.amount,
+    pr.product
+FROM Sales s
+LEFT JOIN product pr
+    ON pr.spid = s.spid
+WHERE s.amount < 500
+AND pr.product = 'Banana';
 
+SELECT
+    s.SalesDate,
+    s.amount,
+    pr.product
+FROM Sales s
+LEFT JOIN product pr
+    ON pr.spid = s.spid
+JOIN Geo g
+    ON g.geoid = s.geoid
+WHERE s.amount < 500
+    AND pr.product = 'Banana'
+    AND g.Geo IN ('New Zealand', 'India')
+ORDER BY SaleDate;
 
+SELECT 
+    geo,
+    SUM(amount),
+    AVG (amount),
+    SUM (boxes)
+FROM sales s
+JOIN geo g
+    ON s.geoID = g.geoID
+GROUP BY g.geo;
 
+SELECT
+    pr.category,
+    p.team,
+    SUM (boxes),
+    SUM (amount)
+FROM Sales s
+JOIN People p
+    ON p.spid = s.spid
+JOIN product pr
+    ON pr.pid = s.pid
+WHERE p.team <> ''
+GROUP BY pr.category, p.team
+ORDER BY pr.category, p.team;
 
-
+SELECT
+    pr.product,
+    SUM (s.amount) AS 'Total Amount'
+FROM Sales s
+JOIN product pr
+    ON pr.pid = s.pid
+GROUP BY pr.product
+ORDER BY 'Total Amount' DESC
+LIMIT 10;

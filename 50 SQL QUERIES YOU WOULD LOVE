@@ -34,9 +34,39 @@ SELECT SalesDate, Amount, Boxes, weekday (SaleDate) AS 'Day of week'
 FROM sales
 WHERE weekday (SaleDate) = 4;
 
+SELECT *
+FROM sales
+WHERE boxes >0 AND boxes <= 50;
+-OR-
+WHERE boxes BETWEEN 0 ANd 50;
 
+SELECT 
+    SaleDate, 
+    Amount, 
+    Boxes,
+    WEEKDAY (SalesDate) AS 'Day of Week'
+FROM sales
+WHERE WEEKDAY (SalesDay) = 4;
 
+SELECT *
+FROM people
+WHERE team = 'Alpha' OR team = 'Beta';
+-OR-
+WHERE team IN ('Alpha', 'Beta');
 
+SELECT *
+FROM peple
+WHERE saleperson LIKE 'B%';
+
+SELECT
+    SaleDate
+    Amount
+    CASE WHEN amount < 1000 THEN 'Under 1k'
+         WHEN amount < 5000 THEN 'Under 5k'
+         WHEN amount < 10000 THEN 'under 10k'
+         ELSE '10k or more'
+         END AS 'Amount category'
+FROM sales;
 
 
 

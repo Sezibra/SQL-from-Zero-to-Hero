@@ -1,0 +1,59 @@
+CREATE TABLE states (
+    state_id NUMBER (10),
+    state_name VARCHAR2 (20),
+    state_region VARCHAR2 (20),
+    country_id NUMBER (10),
+    total_customers NUMBER (20),
+    profit_state_level NUMBER (20),
+CONSTRAINT states_state_id_pk PRIMARY KEY (state_id),
+CONSTRAINT states_country_id_fk FOREIGN KEY (country_id)
+REFERENCES countries (country_id));
+
+ALTER TABLE states ADD COLUMN test_col VARCHAR2 (5); [to add a new column]
+ALTER TABLE states RENAME TO new_states; [rename a table]
+ALTER TABLE new_states RENAME COLUMN test_col TO testing; [to rename a column]
+
+SELECT * 
+FROM dept_tab;
+INSERT INTO dept_tab VALUES (10,'Administration',200,1700); [to insert rows into a given table]
+INSERT INTO DEPT_TAB (deptno, location_id, mgr_id, dname) VALUES (20,1800,210,'Marketing');
+DEPT_TAB VALUES (50,'Strategy', NULL, NULL);
+
+SELECT *
+FROM emp_tab;
+DELETE FROM emp_table
+WHERE empno = 7007; [to delete one row]
+
+DELETE FROM old_emp_tab
+WHERE salary =(
+  SELECT salary
+  FROM emp_tab
+  WHERE salary < 1000); [to delete rows on another table]
+  
+--MODIFY STATEMENTS--
+
+UPDATE emp_tab
+SET salary = 8000
+WHERE empno = 7001; [to modify one row in emp_tab]
+
+UPDATE emp_tab
+SET manager = (
+    SELECT manager
+    FROM emp_tab
+    WHERE empno = 7001),
+salary = (
+    SELECT salary
+    FROM emp_tab
+    WHERE empno = 7001)
+WHERE empno = 7002; [to modify multiple columns using subquery]
+
+UPDATE old_emp_tab
+SET deptno = (
+  SELECT deptno
+  FROM emp_tab
+  WHERE empno = 7001)
+WHERE empno = 7001;
+
+-- RENAME TABLE --
+
+RENAME table1 TO table2;

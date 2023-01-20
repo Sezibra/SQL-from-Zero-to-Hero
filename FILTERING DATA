@@ -1,0 +1,157 @@
+-- FILTERING DATA --
+
+--> COMPARISON CONDITIONS
+SELECT empno, name, Salary, hiredate
+FRom emp_tap
+WHERE Salary > 3000;
+-OR-
+WHERE name = 'Scott';
+-OR-
+WHERE hiredate = '2021-09-06';
+
+--> FURTHER CONDITIONS
+= Equal
+>= Greater than equal to
+<= Less than equal to
+<> Not equal to
+BETWEEN....AND....
+
+SELECT *
+FROM emp_tab
+WHERE Salary 
+BETWEEN 2000 AND 5000;
+
+IN 
+
+SELECT *
+FROM emp_tab
+WHERE deptno IN (30,70);
+
+LIKE
+
+SELECT *
+FROM emp_tab
+WHERE name LIKE '_I%';
+
+IS NULL
+
+SELECT 
+  empno,
+  deptno
+FROM emp_tab
+WHERE deptno IS NULL;
+
+--> LOGICAL CONDITIONS
+
+AND / OR / NOT
+
+SELECT *
+FROM emp_tab
+WHERE name LIKE 'S&' AND deptno = 30;
+
+SELECT *
+FROM emp_tab
+WHERE Salary > 6000 OR deptno > 50;
+
+SELECT *
+FROm emp_tab
+WHERE deptno NOT IN (40,70);
+
+--> ORDER OF PRECEDENCE
+(1) Artihmetic operators
+(2) Concatenation conditions
+(3) Comparison conditions
+(4) IS[NOT] NULL, LIKE, [NOt] IN
+(5) [NOT] BETWEEN
+(6) NOT logical condition
+(7) AND logical condition
+(8) OR logical condition
+
+SELECT *
+FROM emp_tab
+ORDER BY deptno, salary DESC;
+
+
+--> SINGLE ROW FUNCTIONS
+
+(1) Number Functions
+ROUND / TRUNC / MOD
+
+(2) Character Functions
+LOWER / UPPER / CONCAT / SUBSTR / LENGTH / INSTR
+LPAD / RPAD / TRIM / REPLACE
+
+(3) Date Functions
+
+(4) Data Type Conversion Functions
+TO_CHAR / NVL /NULLIF /COALESCE
+
+SELECT
+    name,
+    TO_CHAR(hiredate 'yyyy') "Year of Joining"
+FROM emp_tab;
+
+SELECT
+    NVL(name, 'Unavailable') FROM emp_tab;
+
+(5) Conditional Expressions
+CASE / DECODE
+
+SELECT
+  name,
+  job,
+  salary
+CASE job WHEN 'MANAGER' THEN 1.20*salary
+         WHEN 'ANALYST' THEN 1.15*salary
+         WHEN 'CLERK' THEN 1.10*salary
+         ELSE salary
+         END "Revised Salary"
+FROM emp_tab;
+
+SELECT
+  name,
+  job,
+  salary
+DECODE (job, 'MANAGER' THEN 1.20*salary,
+             'ANALYST' THEN 1.15*salary,
+             'CLERK' THEN 1.10*salary,
+             salary) "Revised Salary"
+FROM emp_tab;
+
+
+--> GROUP FUNCTIONS / FILTERING GROUPS
+
+SELECT 
+    manager, 
+    MAX (salary)
+FROM emp_tab
+GROUP BY manager
+ORDER BY MAX(salary) DESC;
+
+SELECT
+    deptno, 
+    MAX (salary)
+FROM emp_tab
+GROUP BY deptno
+HAVING MAX (salary) > 4000;
+
+--> SUBQUERIES
+
+instead of writing the following two queries:
+
+SELECT country_id
+FROM states_tab
+WHERE state_name = 'CALIFORNIA'
+
+SELECT *
+FROM states_tab
+WHERE country_id = (1);
+
+Write the following sub query:
+
+SELECT *
+FROM states_tab
+WHERE country_id =
+(SELECT country_id
+FROM states_tab
+WHERE state_name = 'CALIFORNIA');
